@@ -1,0 +1,29 @@
+
+extXMLRPC
+======
+
+This extension provides XML-RPC support.
+
+Dependencies
+------------
+
+* Core
+* Network
+* [Cocoa XML-RPC framework](http://github.com/ngs/xmlrpc)
+
+Using it in your App
+--------------------
+
+Add the `extThree20XMLRPC.xcodeproj` file to your project. Add `libextThree20XMLRPC.a` to your
+"Link Binary With Libraries" phase, and add `extThree20XMLRPC` as a dependency.
+
+Import the following into your precompiled header or wherever you need access to
+`TTURLXMLRPCResponse`.
+
+    #import "extThree20XMLRPC/extThree20XMLRPC.h"
+    
+    ...
+    
+    TTURLXMLRPCResponse *res = (TTURLXMLRPCResponse *) req.response;
+    NSDictionary *tree = res.object;
+    // this will be NSDictionary tree parsed by Cocoa XML-RPC framework.
