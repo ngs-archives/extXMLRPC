@@ -2,28 +2,59 @@
 extXMLRPC
 ======
 
-This extension provides XML-RPC support.
+The XML-RPC extension provides support for sending XML-RPC request, parsing XML-RPC data and receiving XML-RPC responses.
 
 Dependencies
 ------------
 
 * Core
 * Network
-* [Cocoa XML-RPC framework](http://github.com/ngs/xmlrpc)
 
 Using it in your App
 --------------------
 
-Add the `extXMLRPC.xcodeproj` file to your project. Add `libextXMLRPC.a` to your
-"Link Binary With Libraries" phase, and add `extXMLRPC` as a dependency.
+Add it automatically using ttmodule.py.
+
+    python src/scripts/ttmodule.py -p ../relative/path/to/project.xcodeproj ~/absolute/path/to/three20/extensions/extXMLRPC/extXMLRPC.xcodeproj -c Debug -c Release
 
 Import the following into your precompiled header or wherever you need access to
-`TTURLXMLRPCResponse`.
+`TTURLXMLRPCResponse` and `TTURLXMLRPCRequest`.
+
+    #import "extXML/extXML.h"
+
+Breakdown
+---------
+
+Use `TTURLXMLRPCResquest` to send XML-RPC requests.
+Use `TTURLXMLRPCResponse` to handle XML-RPC responses.
+
+Import the following into your precompiled header or wherever you need access to
+`TTURLXMLRPCResponse` and `TTURLXMLRPCRequest` .
 
     #import "extXMLRPC/extXMLRPC.h"
     
     ...
+    //
+    // sending request
+    //
+    TTURLXMLRPCRequest *req = [[[TTURLXMLRPCRequest alloc]
+                                    initWithURL:@"http://www.mydomain.tld/path/to/xmlrpc"
+                                         method:@"do.something"
+                                      parameter:param // `param` is a NSDictionary
+                                       delegate:self]
+                               autorelease];
     
-    TTURLXMLRPCResponse *res = (TTURLXMLRPCResponse *) req.response;
-    NSDictionary *tree = res.object;
-    // this will be NSDictionary tree parsed by Cocoa XML-RPC framework.
+    [req setCachePolicy:cachePolicy];
+    [req setCacheExpirationAge:TT_CACHE_EXPIRATION_AGE_NEVER];
+    [req send];
+    
+    ...
+    //
+    // and handling response
+    //
+    TTURLXMLRPCResponse *res = (TTURLXMLRPCResponse *)request.response;
+    
+    ...
+
+
+An example is in [ngs/Samples](https://github.com/ngs/Samples/tree/master/XMLRPCSample)
