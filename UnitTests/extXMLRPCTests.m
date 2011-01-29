@@ -1,5 +1,5 @@
 //
-// Copyright 2009-2010 Facebook
+// Copyright 2010-2011 LittleApps Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -22,7 +22,7 @@
 #import <SenTestingKit/SenTestingKit.h>
 
 // extXML
-#import <extThree20XMLRPC/extThree20XMLRPC.h>
+#import <extXMLRPC/extXMLRPC.h>
 
 // Core
 #import "Three20Core/TTCorePreprocessorMacros.h"
@@ -108,10 +108,18 @@
     [str appendString:@"<params>"];
       [str appendString:@"<param><value>"];
         [str appendString:@"<struct>"];
-
-          [str appendString:@"<member>"];
-            [str appendString:@"<name>aNullValue</name>"];
-          [str appendString:@"</member>"];
+	
+	
+					[str appendString:@"<member>"];
+						[str appendString:@"<name>anArrayValue</name>"];
+						[str appendString:@"<value><array><data>"];
+						[str appendString:@"<value><i4>246</i4></value>"];
+						[str appendString:@"<value><double>21.7</double></value>"];
+						[str appendString:@"<value><boolean>0</boolean></value>"];
+						[str appendFormat:@"<value><string>%@</string></value>",kDummyStringXMLEscaped];
+						[str appendString:@"</data></array></value>"];
+					[str appendString:@"</member>"];
+	
 
           [str appendString:@"<member>"];
             [str appendString:@"<name>aBooleanValue</name>"];
@@ -127,20 +135,15 @@
             [str appendString:@"<name>aIntValue</name>"];
             [str appendString:@"<value><i4>135</i4></value>"];
           [str appendString:@"</member>"];
+	
+	
+					[str appendString:@"<member>"];
+						[str appendString:@"<name>aNullValue</name>"];
+					[str appendString:@"</member>"];
 
           [str appendString:@"<member>"];
             [str appendString:@"<name>aStringValue</name>"];
             [str appendFormat:@"<value><string>%@</string></value>",kDummyStringXMLEscaped];
-          [str appendString:@"</member>"];
-
-          [str appendString:@"<member>"];
-            [str appendString:@"<name>anArrayValue</name>"];
-            [str appendString:@"<value><array><data>"];
-              [str appendString:@"<value><i4>246</i4></value>"];
-              [str appendString:@"<value><double>21.7</double></value>"];
-              [str appendString:@"<value><boolean>0</boolean></value>"];
-              [str appendFormat:@"<value><string>%@</string></value>",kDummyStringXMLEscaped];
-            [str appendString:@"</data></array></value>"];
           [str appendString:@"</member>"];
           
         [str appendString:@"</struct>"];
@@ -149,7 +152,7 @@
     [str appendString:@"</params>"];
   [str appendString:@"</methodCall>"];        
                                                    
-	STAssertEqualObjects([req body],str,@"Check request body as string.");
+	STAssertEqualObjects(str,[req body],@"Check request body as string.");
 	
 	TT_RELEASE_SAFELY(req);
 }
@@ -201,7 +204,7 @@
 
 #pragma mark -
 - (NSData *)dataWithBundledXMLFileName:(NSString *)fileName {
-  NSBundle* testBundle = [NSBundle bundleWithIdentifier:@"com.facebook.three20.UnitTests"];
+  NSBundle* testBundle = [NSBundle bundleWithIdentifier:@"jp.littleapps.three20.UnitTests"];
 	STAssertNotNil(testBundle, @"Unable to find the bundle %@", [NSBundle allBundles]);
   NSString* xmlDataPath = [[testBundle bundlePath] stringByAppendingPathComponent:fileName];
   NSData* xmlData = [[NSData alloc] initWithContentsOfFile:xmlDataPath];

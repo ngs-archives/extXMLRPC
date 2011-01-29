@@ -14,13 +14,13 @@ Dependencies
 Using it in your App
 --------------------
 
-Add the `extThree20XMLRPC.xcodeproj` file to your project. Add `libextThree20XMLRPC.a` to your
-"Link Binary With Libraries" phase, and add `extThree20XMLRPC` as a dependency.
+Add the `extXMLRPC.xcodeproj` file to your project. Add `libextXMLRPC.a` to your
+"Link Binary With Libraries" phase, and add `extXMLRPC` as a dependency.
 
 Import the following into your precompiled header or wherever you need access to
 `TTURLXMLRPCResponse`.
 
-    #import "extThree20XMLRPC/extThree20XMLRPC.h"
+    #import "extXMLRPC/extXMLRPC.h"
     
     ...
     

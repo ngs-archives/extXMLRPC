@@ -1,5 +1,5 @@
 //
-// Copyright 2011 LittleApps Inc.
+// Copyright 2010-2011 LittleApps Inc.
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -14,12 +14,8 @@
 // limitations under the License.
 //
 
-#include "../../src/common/Configurations/Library.xcconfig"
-#include "../../src/common/Configurations/Libraries.xcconfig"
+#import "Three20Core/TTExtensionLoader.h"
 
-BASE_PRODUCT_NAME       = extXMLRPC
-PRODUCT_NAME            = $(BASE_PRODUCT_NAME)
-BUILD_LIBRARY_VERSION   = 1.0
+@interface TTExtensionLoader (TTXMLRPCExtension)
 
-PRIVATE_HEADERS_FOLDER_PATH   = /../three20/$(BASE_PRODUCT_NAME)/private
-PUBLIC_HEADERS_FOLDER_PATH    = /../three20/$(BASE_PRODUCT_NAME)
+@end
